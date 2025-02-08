@@ -21,7 +21,7 @@ public class GenreService {
         int genreId = Integer.parseInt(scanner.nextLine());
 
         Genre genre = manager.find(Genre.class, genreId);
-        genre.getMovies().remove(movie);
+        movie.getGenres().remove(genre);
 
 
         try {
@@ -41,7 +41,7 @@ public class GenreService {
         int genreId = Integer.parseInt(scanner.nextLine());
 
         Genre genre = manager.find(Genre.class, genreId);
-        genre.getMovies().add(movie);
+        movie.getGenres().add(genre);
 
         try {
             manager.getTransaction().begin();
