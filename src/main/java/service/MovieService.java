@@ -14,9 +14,6 @@ public class MovieService {
 
     public static void create(EntityManager manager) {
 
-        System.out.print("Введите id фильма: "); //Временно (убрать)
-        int id = Integer.parseInt(scanner.nextLine());
-
         System.out.print("Введите название фильма: ");
         String title = scanner.nextLine();
 
@@ -46,7 +43,6 @@ public class MovieService {
         }
 
         Movie movie = new Movie();
-        movie.setId(id);
         movie.setTitle(title);
         movie.setReleaseYear(year);
         movie.setRating(rating);

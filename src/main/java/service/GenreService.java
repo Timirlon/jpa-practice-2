@@ -16,24 +16,46 @@ public class GenreService {
         query.getResultList().forEach(genre -> System.out.println(genre.getId() + ". " + genre.getName()));
     }
 
-    public static void deleteByMovieId(int filmId, EntityManager manager) {
+    public static void deleteByMovie(Movie movie, EntityManager manager) {
+        System.out.print("Введите id жанра, который вы хотите удалить: ");
+        int genreId = Integer.parseInt(scanner.nextLine());
 
+        Genre genre = manager.find(Genre.class, genreId);
+        genre.getMovies().remove(movie);
+
+
+        try {
+            manager.getTransaction().begin();
+            manager.merge(genre);
+            manager.getTransaction().commit();
+
+            System.out.println("Жанр удален.");
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
     }
 
-    public static void addByMovieId(int filmId, EntityManager manager) {
-        Movie movie = manager.find(Movie.class, filmId);
-
+    public static void addByMovie(Movie movie, EntityManager manager) {
         System.out.print("Введите id жанра, который вы хотите добавить: ");
         int genreId = Integer.parseInt(scanner.nextLine());
 
         Genre genre = manager.find(Genre.class, genreId);
+        genre.getMovies().add(movie);
 
+        try {
+            manager.getTransaction().begin();
+            manager.merge(genre);
+            manager.getTransaction().commit();
+
+            System.out.println("Жанр добавлен.");
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
     }
 
-    public static void findAllByMovieId(int filmId, EntityManager manager) {
-        Movie movie = manager.find(Movie.class, filmId);
-
-
+    public static void findAllByMovie(Movie movie, EntityManager manager) {
         try {
             System.out.println(movie.getTitle());
 
